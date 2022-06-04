@@ -1,8 +1,6 @@
 package com.merkaba.sfscamerav2;
 import android.content.Context;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.DbxClientV2;
@@ -10,8 +8,6 @@ import com.dropbox.core.v2.files.FileMetadata;
 import com.dropbox.core.v2.files.WriteMode;
 
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
@@ -69,7 +65,7 @@ class UploadFileTask extends AsyncTask<String, Void, FileMetadata> {
         try(InputStream inputStream = new ByteArrayInputStream(mData)) {
             // Upload to Dropbox
 
-            String filename = generateName();
+            String filename = Utils.generateFilename();
             return mDbxClient.files().uploadBuilder("/Ayam_Mgu_01/" + filename) //Path in the user's Dropbox to save the file.
                     .withMode(WriteMode.OVERWRITE) //always overwrite existing file
                     .uploadAndFinish(inputStream)

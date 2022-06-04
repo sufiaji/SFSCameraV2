@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.0"
 
     defaultConfig {
         applicationId "com.merkaba.sfscamerav2"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -51,5 +51,9 @@ dependencies {
     implementation 'com.yarolegovich:lovely-dialog:1.1.1'
 
     implementation 'com.yarolegovich:discrete-scrollview:1.5.1'
+
+    implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.github.hannesa2:paho.mqtt.android:3.3.5'
 
 }

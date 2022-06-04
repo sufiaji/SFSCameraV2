@@ -12,7 +12,23 @@
         app:cameraPictureSizeMaxWidth="1280"
         app:cameraAudio="off"
         app:cameraFlash="on"
+        app:cameraEngine="camera2"
+        app:cameraPictureSizeMinHeight="1280"
+        app:cameraPictureSizeMinWidth="1280"
+        app:cameraPictureSizeAspectRatio="2:1"
         />
+
+    <Button
+        android:id="@+id/buttonUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="72dp"
+        android:text="Start Upload"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/teal_700"
+        android:onClick="onUploadButton"/>
 
     <Button
         android:id="@+id/buttonCamera"
@@ -20,30 +36,45 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
-        android:text="Ambil Gambar"
+        android:layout_marginBottom="72dp"
+        android:text="Capture"
+        android:textColor="@color/white"
         android:onClick="onTakePicture"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
         android:textStyle="bold"
         android:alpha="0.6"
         android:textSize="20sp"
         android:text="SFS CameraKit"/>
 
     <TextView
+        android:id="@+id/mqttState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="42dp"
+        android:textStyle="bold|italic"
+        android:text="MQTT State: ..."/>
+
+    <TextView
         android:id="@+id/counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:alpha="0.6"
         android:text="-/-"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:alpha="0.6"
-        android:layout_margin="12dp"/>
+        android:textStyle="bold" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab1"
@@ -56,6 +87,16 @@
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:backgroundTint="@android:color/holo_blue_light"/>
+
+    <TextView
+        android:id="@+id/txtNumImage"
+        android:onClick="onPicCounterButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fab1"
+        android:layout_alignTop="@id/fab1"
+        android:layout_marginLeft="8dp"
+        android:text="Num images"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab2"
@@ -70,6 +111,16 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"/>
 
+    <TextView
+        android:id="@+id/txtDelay"
+        android:onClick="onTimerButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fab2"
+        android:layout_alignTop="@id/fab2"
+        android:layout_marginLeft="8dp"
+        android:text="Delay time"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab3"
         android:layout_below="@id/fab2"
@@ -83,9 +134,19 @@
         android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"/>
 
+    <TextView
+        android:id="@+id/txtFlash"
+        android:onClick="onFlashButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fab3"
+        android:layout_alignTop="@id/fab3"
+        android:layout_marginLeft="8dp"
+        android:text="Flash"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab4"
-        android:layout_alignParentRight="true"
+        android:layout_below="@id/fab3"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="Timer"
@@ -93,8 +154,64 @@
         app:borderWidth="0dp"
         app:elevation="6dp"
         app:backgroundTint="@android:color/holo_purple"
-        android:layout_marginRight="12dp"
+        android:layout_marginLeft="12dp"
         android:layout_marginTop="8dp"/>
 
+    <TextView
+        android:id="@+id/txtLocal"
+        android:onClick="onLocalButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fab4"
+        android:layout_alignTop="@id/fab4"
+        android:layout_marginLeft="8dp"
+        android:text="Local Storage"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab6"
+        android:layout_below="@id/fab4"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="Timer"
+        android:onClick="onSendToButton"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:backgroundTint="@android:color/holo_blue_dark"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"/>
+
+    <TextView
+        android:id="@+id/txtDropbox"
+        android:onClick="onSendToButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/fab6"
+        android:layout_alignTop="@id/fab6"
+        android:layout_marginLeft="8dp"
+        android:text="Send to dropbox"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab5"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:contentDescription="Timer"
+        android:onClick="onModeButton"
+        app:borderWidth="0dp"
+        app:elevation="6dp"
+        app:backgroundTint="@android:color/holo_green_dark"
+        android:layout_marginTop="12dp"/>
+
+    <TextView
+        android:id="@+id/txtMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/fab5"
+        android:layout_marginRight="8dp"
+        android:layout_toLeftOf="@+id/fab5"
+        android:onClick="onModeButton"
+        android:textStyle="bold"
+        android:text="Demo" />
 
 </RelativeLayout>
